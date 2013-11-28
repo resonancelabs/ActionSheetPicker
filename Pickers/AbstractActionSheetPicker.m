@@ -225,11 +225,21 @@
 
 - (UIBarButtonItem *)createToolbarLabelWithTitle:(NSString *)aTitle {
     UILabel *toolBarItemlabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 180,30)];
-    [toolBarItemlabel setTextAlignment:UITextAlignmentCenter];    
-    [toolBarItemlabel setTextColor:[UIColor whiteColor]];    
-    [toolBarItemlabel setFont:[UIFont boldSystemFontOfSize:16]];    
-    [toolBarItemlabel setBackgroundColor:[UIColor clearColor]];    
-    toolBarItemlabel.text = aTitle;    
+    NSDictionary *dict = [[UINavigationBar appearance] titleTextAttributes];
+    UIFont *font = [dict valueForKey:NSFontAttributeName];
+    UIColor *color = [dict valueForKey:NSForegroundColorAttributeName];
+    if (font == nil) {
+        font = [UIFont boldSystemFontOfSize:16];
+    }
+    if (color == nil) {
+        color = [UIColor whiteColor];
+    }
+
+    [toolBarItemlabel setTextAlignment:UITextAlignmentCenter];
+    [toolBarItemlabel setTextColor:color];
+    [toolBarItemlabel setFont:font];
+    [toolBarItemlabel setBackgroundColor:[UIColor clearColor]];
+    toolBarItemlabel.text = aTitle;
     UIBarButtonItem *buttonLabel = [[UIBarButtonItem alloc]initWithCustomView:toolBarItemlabel];
     return buttonLabel;
 }
